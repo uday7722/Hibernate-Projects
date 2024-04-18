@@ -19,38 +19,37 @@ public class FetchUsingCriteriaBuilder {
 	public static void main(String[] args) {
 
 		Configuration configuration=new Configuration().configure().addAnnotatedClass(Fruit.class).addAnnotatedClass(Customer.class);
-
 		SessionFactory sessionFactory=configuration.buildSessionFactory();
-
 		Session session=sessionFactory.openSession();
 		Transaction transaction=session.beginTransaction();
 
 
-		//		Fetching --CriteriaQuery
-//		CriteriaBuilder builder=session.getCriteriaBuilder();	
-//		CriteriaQuery<Fruit> criteriaQuery=builder.createQuery(Fruit.class);	
-//		Root<Fruit> root=criteriaQuery.from(Fruit.class);
-//		//criteriaQuery.select(root).where(builder.gt(root.get("fruitCost"), 60));
-//		criteriaQuery.select(root).where(builder.between(root.get("fruitCost"), 70, 80));
-//
-//		Query<Fruit> query=session.createQuery(criteriaQuery);	
-//		List<Fruit> fruits=query.list();
-//		for(Fruit fruit:fruits) {
-//			System.out.println(fruit);
-//		}	
+		// CriteriaQuery--Fetching
+		CriteriaBuilder builder=session.getCriteriaBuilder();	
+		CriteriaQuery<Fruit> criteriaQuery=builder.createQuery(Fruit.class);	
+		Root<Fruit> root=criteriaQuery.from(Fruit.class);
+		//criteriaQuery.select(root).where(builder.gt(root.get("fruitCost"), 60));
+		criteriaQuery.select(root).where(builder.between(root.get("fruitCost"), 70, 80));
+
+		Query<Fruit> query=session.createQuery(criteriaQuery);	
+		List<Fruit> fruits=query.list();
+		for(Fruit fruit:fruits) {
+			System.out.println(fruit);
+		}	
 		
-//					update
+		// CriteriaUpdate--For update
 		
-//		CriteriaBuilder builder=session.getCriteriaBuilder();	
-//		CriteriaUpdate<Fruit> criteriaUpdate=builder.createCriteriaUpdate(Fruit.class);	
-//		Root<Fruit> root=criteriaUpdate.from(Fruit.class);
-//		criteriaUpdate.set("fruitCost", 120);
-//		criteriaUpdate.where(builder.between(root.get("fruitCost"), 60, 80));
-//
-//		Query<Fruit> query=session.createQuery(criteriaUpdate);	
-//		int result=query.executeUpdate();
-//		System.out.println(result+" Data updated Successfully");
-		
+		CriteriaBuilder builder=session.getCriteriaBuilder();	
+		CriteriaUpdate<Fruit> criteriaUpdate=builder.createCriteriaUpdate(Fruit.class);	
+		Root<Fruit> root=criteriaUpdate.from(Fruit.class);
+		criteriaUpdate.set("fruitCost", 120);
+		criteriaUpdate.where(builder.between(root.get("fruitCost"), 60, 80));
+
+		Query<Fruit> query=session.createQuery(criteriaUpdate);	
+		int result=query.executeUpdate();
+		System.out.println(result+" Data updated Successfully");
+
+		 // CriteriaDelete--For Deleting
 		
 		CriteriaBuilder builder=session.getCriteriaBuilder();	
 		CriteriaDelete<Fruit> criteriaDelete=builder.createCriteriaDelete(Fruit.class);	
@@ -65,8 +64,4 @@ public class FetchUsingCriteriaBuilder {
 		session.close();
 
 	}
-
-
-
-
 }
